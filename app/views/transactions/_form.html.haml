@@ -1,20 +1,11 @@
-= form_for(transaction) do |f|
-  - if transaction.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(transaction.errors.count, "error")
-        prohibited this transaction from being saved:
-      %ul
-        - transaction.errors.full_messages.each do |message|
-          %li= message
-  .field
-    = f.label :description
-    = f.text_field :description
-  .field
-    = f.label :user_id
-    = f.text_field :user_id
-  .field
-    = f.label :merchant_id
-    = f.text_field :merchant_id
-  .actions
-    = f.submit
+.col-xs-6.col-sm-6.col-md-6.col-lg-6
+  .container
+    = form_for(transaction) do |f|
+      .form-group
+        = f.label :description
+        = f.text_field :description
+      .field
+        = f.label :description
+        = f.text_field :description
+      .actions
+        = f.submit

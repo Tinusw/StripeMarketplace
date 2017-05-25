@@ -25,6 +25,14 @@ class MerchantsController < ApplicationController
     end
   end
 
+  def update
+    if @merchant.save
+      redirect_to merchants_path
+    else
+      format.html { render :new }
+    end
+  end
+
   def destroy
     @merchant.destroy
     respond_to do |format|
