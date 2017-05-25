@@ -1,0 +1,18 @@
+%p#notice= notice
+%h1 Merchants
+%table
+  %thead
+    %tr
+      %th Title
+      %th Description
+      %th{:colspan => "3"}
+  %tbody
+    - @merchants.each do |merchant|
+      %tr
+        %td= merchant.title
+        %td= merchant.description
+        %td= link_to 'Show', merchant
+        %td= link_to 'Edit', edit_merchant_path(merchant)
+        %td= link_to 'Destroy', merchant, method: :delete, data: { confirm: 'Are you sure?' }
+%br
+= link_to 'New Merchant', new_user_merchant_path(@user)

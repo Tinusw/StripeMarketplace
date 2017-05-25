@@ -1,0 +1,13 @@
+%p#notice= notice
+%p
+  %strong Title:
+  = @merchant.title
+%p
+  %strong Description:
+  = @merchant.description
+%p
+  %strong User:
+  = @merchant.user
+= link_to 'Edit', edit_merchant_path(@merchant)
+|
+\#{link_to 'Back', merchants_path}
