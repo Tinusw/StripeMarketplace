@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root 'home#index'
+  devise_for :users
+  devise_scope :user do
+    authenticated :user do
+      root 'home#index'
+    end
+    unauthenticated do
+      root 'devise/sessions#new'
+    end
+  end
 end
