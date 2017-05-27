@@ -10,11 +10,23 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :merchants
-
-  resources :user do
-    resources :merchants do
-      resources :items
+  resources :admin do
+    resources :users do
+      collection do
+        put :approve
+      end
     end
+  end
+
+  resources :transactions
+
+  resources :merchants do
+    resources :items
+    resources :transactions
+  end
+
+  resources :users do
+    resources :merchants
+    resources :transactions
   end
 end

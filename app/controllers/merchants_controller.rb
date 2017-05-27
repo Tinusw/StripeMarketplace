@@ -7,6 +7,9 @@ class MerchantsController < ApplicationController
   end
 
   def show
+    @user = current_user
+    @items = @merchant.items.all
+    @transaction = @user.transactions.build
   end
 
   def new

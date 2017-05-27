@@ -1,0 +1,19 @@
+.container
+- @users.each do |user|
+  .container
+    %h3
+      Users
+    .row
+      .col-lg-3
+        = user.email
+      .col-lg-1
+        = user.created_at
+      .col-lg-3
+        - if user.admin?
+          Admin
+        - else
+          = link_to 'Make Admin', admin_path(user, admin: 'true'), class:'btn btn-info', method: :put
+      .col-lg-3
+        = link_to 'Credit $10', admin_path(user, amount: 10.00), class:'btn btn-primary', method: :put
+      .col-lg-2
+        = "#{number_to_currency(user.credit)} credit remaining"

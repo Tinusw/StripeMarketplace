@@ -1,10 +1,44 @@
 .col-xs-12.col-sm-12.col-md-12.col-lg-12
-  .container
+  .jumbotron.text-center
     %h4
       = @merchant.title
     %p
       = @merchant.description
-  .container
-    = link_to 'Edit', edit_merchant_path(@merchant)
-    |
-    \#{link_to 'Back', merchants_path}
+    .row
+      - if current_user == @merchant.owner
+        = link_to 'Edit', edit_merchant_path(@merchant), class: 'btn btn-info'
+        = link_to 'Back', merchants_path, class: 'btn btn-info'
+        .container
+          %br
+          = link_to 'Add New Item', new_merchant_item_path(@merchant), class: 'btn btn-lg btn-success'
+      - else
+        = link_to 'Back', merchants_path, class: 'btn btn-info'
+
+  .col-lg-12
+    - if @items.any?
+      - @items.each do |item|
+        .col-xs-12.col-sm-12.col-md-6.col-lg-3
+          .panel.panel-default
+            .panel-header.text-center
+              %h3
+                = item.title
+              %p
+                = item.description
+              %p
+                = "$#{item.price}"
+            .row
+              .col-lg-12.text-center
+                = form_for @transaction do |f|
+                  = f.hidden_field :user_id, value: current_user.id
+                  = f.hidden_field :merchant_id, value: @merchant.id
+                  = f.hidden_field :item_id, value: item.id
+                  = f.hidden_field :total, value: item.price
+                  = f.submit 'BUY', class: 'btn btn-success'
+            - if current_user == @merchant.owner
+              .row
+                .col-lg-6.text-center
+                  .btn.btn-md.btn-warning.btn-options
+                    = link_to 'Edit', edit_merchant_item_path(@merchant, item)
+                .col-lg-6.text-center
+                  .btn.btn-md.btn-danger.btn-options
+                    = link_to 'Destroy', merchant_item_path(@merchant, item), method: :delete

@@ -6,16 +6,13 @@ class TransactionsController < ApplicationController
   end
 
   def show
-  end
-
-  def new
-    @transaction = Transaction.new
-  end
-
-  def edit
+    @item = Item.find_by_id(@transaction.item_id)
   end
 
   def create
+    # byebug
+    @merchant = Merchant.find(params[:transaction][:merchant_id])
+    @user = current_user
     @transaction = Transaction.new(transaction_params)
 
     respond_to do |format|
@@ -50,12 +47,12 @@ class TransactionsController < ApplicationController
   end
 
   private
-  
+
   def set_transaction
     @transaction = Transaction.find(params[:id])
   end
 
   def transaction_params
-    params.require(:transaction).permit(:description, :user_id, :merchant_id)
+    params.require(:transaction).permit(:user_id, :merchant_id, :item_id, :total)
   end
 end

@@ -1,0 +1,35 @@
+%nav.navbar.navbar-default
+  .container-fluid
+    / Brand and toggle get grouped for better mobile display
+    .navbar-header
+      %button.navbar-toggle.collapsed{"aria-expanded" => "false", "data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", :type => "button"}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+    / Collect the nav links, forms, and other content for toggling
+    #bs-example-navbar-collapse-1.collapse.navbar-collapse
+      - if current_user
+        %ul.nav.navbar-nav
+          %li
+            = link_to 'HOME', root_path
+          - if current_user.admin?
+            %li
+              = link_to 'ADMIN', admin_index_path
+          %li
+            = link_to 'Profile', edit_user_registration_path(current_user)
+          %li
+            = link_to 'Transactions', user_transactions_path(current_user)
+        %ul.nav.navbar-nav.navbar-right
+          %li
+            = link_to 'Sign Out', destroy_user_session_path, method: :delete
+          %li
+            %a{href: 'https://medium.com/@ThatGuyTinus'}
+              View Blogpost
+      - else
+        %ul.nav.navbar-nav.navbar-right
+          %li
+            = link_to 'Sign In', new_user_session_path
+          %li
+            %a{href: 'https://medium.com/@ThatGuyTinus'}
+              View Blogpost

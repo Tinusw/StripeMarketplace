@@ -1,3 +1,7 @@
-%h1 New Item
-= render 'form', item: @item
-= link_to 'Back', items_path
+.col-xs-12.col-sm-12.col-md-12.col-lg-12
+  .jumbotron.text-center
+    %h4
+      New Item
+    = render 'form', item: @item, merchant: @merchant
+    .container
+      = link_to 'Back', merchants_path(@merchant), class: 'btn btn-info'

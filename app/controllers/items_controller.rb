@@ -1,5 +1,4 @@
 class ItemsController < ApplicationController
-  before_action :set_item, only: [:show, :edit, :update, :destroy]
 
   def index
     @items = Item.all
@@ -9,38 +8,44 @@ class ItemsController < ApplicationController
   end
 
   def new
-    @item = Item.new
+    @merchant = Merchant.find(params[:merchant_id])
+    @item = @merchant.items.build
   end
 
   def edit
+    @merchant = Merchant.find(params[:merchant_id])
+    @item = Item.find(params[:id])
   end
 
   def create
-    @item = Item.new(item_params)
+    @merchant = Merchant.find(params[:merchant_id])
+    @item = @merchant.items.new(item_params)
 
-    respond_to do |format|
-      if @item.save
-        format.html { redirect_to @item, notice: 'Item was successfully created.' }
-      else
-        format.html { render :new }
-      end
+    if @item.save
+      redirect_to merchant_path(@merchant)
+    else
+      format.html { render :new }
     end
   end
 
   def update
-    respond_to do |format|
-      if @item.update(item_params)
-        format.html { redirect_to @item, notice: 'Item was successfully updated.' }
-      else
-        format.html { render :edit }
-      end
+    set_item
+    @merchant = Merchant.find(params[:merchant_id])
+    if @item.update(item_params)
+      redirect_to merchant_path(@merchant)
+    else
+      format.html { render :edit }
     end
   end
 
   def destroy
+    set_item
+    @merchant = Merchant.find(params[:merchant_id])
     @item.destroy
-    respond_to do |format|
-      format.html { redirect_to items_url, notice: 'Item was successfully destroyed.' }
+    if @item.destroyed?
+      redirect_to merchant_path(@merchant)
+    else
+      redirect_to merchant_path(@merchant)
     end
   end
 
@@ -48,6 +53,10 @@ class ItemsController < ApplicationController
 
   def set_item
     @item = Item.find(params[:id])
+  end
+
+  def set_merchant
+    @merchant = Merchant.find(params[:id])
   end
 
   def item_params

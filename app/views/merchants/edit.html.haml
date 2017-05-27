@@ -1,8 +1,8 @@
 .col-xs-12.col-sm-12.col-md-12.col-lg-12
-  .container.text-center
-    %h1 Editing Merchant
-  .container
+  .jumbotron.text-center
+    %h4
+      Editing Merchant
     = render 'form', merchant: @merchant
-    = link_to 'Show', @merchant
-    |
-    \#{link_to 'Back', merchants_path}
+    .container
+      .btn.btn-lg.btn-info
+        = link_to 'Back', merchants_path
