@@ -1,0 +1,43 @@
+.col-xs-12.col-sm-12.col-md-12.col-lg-12
+  .container
+    .row
+      .col-xs-12.col-sm-12.col-md-6.col-lg-offset-3.col-lg-6.text-center
+        - if current_user.can_make_payments?
+          %h5#card-available
+            Already a Stripe Customer, add new card details below if you'd like to create a new account anyway.
+        - else
+          %h5#card-unavailable
+          Not a Stripe Customer Yet, Let's Create An Account!
+  .container
+    = form_for current_user, html: {class:'form-horizontal edit_user'} do |f|
+      = f.hidden_field :stripe_temporary_token, id: 'stripe_temporary_token'
+      .form-group
+        .row
+          .col-xs-12.col-sm-12.col-md-6.col-lg-offset-3.col-lg-6
+            = f.label :email, class: 'control-label'
+            = f.text_field :email, class:'form-control'
+      .form-group
+        .row
+          .col-xs-12.col-sm-12.col-md-6.col-lg-offset-3.col-lg-6
+            %label.small
+              Card Number
+            = text_field_tag :card_number, nil, name: nil, class: 'form-control', data: {stripe: 'number' }, placeholder: 'Card Number'
+
+      .form-group
+        .row
+          .col-xs-12.col-sm-12.col-md-4.col-lg-offset-3.col-lg-2
+            %label.small
+              Expiration month
+            = select_month(Date.today, {add_month_numbers: true}, id: 'card_month', class: 'form-control', data: {stripe: 'exp-month'})
+          .col-xs-12.col-sm-12.col-md-4.col-lg-2
+            %label.small
+              Expiration year
+            = select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 10}, id: 'card_year', class: 'form-control', data: {stripe: 'exp-year'})
+          .col-xs-12.col-sm-12.col-md-4.col-lg-2
+            %label.small
+              Security Code
+            = text_field_tag :card_cvc, nil, name: nil, class: 'form-control', data: {stripe: 'cvc'}, placeholder: 'CVV/CVC'
+      .form-group
+        .row
+          .col-xs-12.col-sm-12.col-md-4.col-lg-offset-3.col-lg-6.text-center
+            = f.submit

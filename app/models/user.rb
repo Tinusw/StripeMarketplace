@@ -5,6 +5,8 @@ class User < ApplicationRecord
   has_many :merchants, dependent: :destroy
   has_many :transactions
 
+  attr_accessor :stripe_temporary_token
+
   def make_admin
     self.update_attributes!(admin: !admin)
   end
@@ -21,6 +23,10 @@ class User < ApplicationRecord
 
   def can_receive_payments?
     uid? &&  provider? && access_code? && publishable_key?
+  end
+
+  def can_make_payments?
+    stripe_customer_id?
   end
 
 end

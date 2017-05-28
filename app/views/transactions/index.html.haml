@@ -1,13 +1,31 @@
 .container
-- @transactions.each do |transaction|
   .panel.panel-default
     .row
       .col-lg-2
-        = "Transaction ID: #{transaction.id}"
+        ID
+      .col-lg-2
+        Title & Description
+      .col-lg-1
+        Total
+      .col-lg-1
+        Link
+      .col-lg-1
+        Processed on Stripe?
       .col-lg-3
+        Stripe Charge ID
+
+  - @transactions.each do |transaction|
+    .row
+      .col-lg-2
+        = "Transaction ID: #{transaction.id}"
+      .col-lg-2
         = transaction.merchant.title
         = transaction.merchant.description
-      .col-lg-3
+      .col-lg-1
         = number_to_currency(transaction.total)
-      .col-lg-2
+      .col-lg-1
         = link_to 'Show', transaction
+      .col-lg-1
+        = transaction.paid
+      .col-lg-3
+        = transaction.stripe_charge

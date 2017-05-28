@@ -18,5 +18,13 @@
       %strong Total Cost:
       = number_to_currency(@transaction.total)
 
+    %p
+      %strong Stripe Payment Made?
+      = @transaction.paid
+
+    %p
+      %strong Stripe Charge ID
+      = @transaction.stripe_charge
+
     .row.text-center
       = link_to 'Back', merchants_path, class: 'btn btn-info'

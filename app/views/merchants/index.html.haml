@@ -41,5 +41,8 @@
   %br
   .col-xs-12.col-sm-12.col-md-12.col-lg-12.text-center
     .panel.panel-default
-    .btn.btn-md.btn-info
-      = link_to 'New Merchant', new_user_merchant_path(@user)
+      .panel-header
+        .btn.btn-md.btn-info
+          = link_to 'New Merchant', new_user_merchant_path(@user)
+
+  = render 'billing'

@@ -10,13 +10,13 @@ class TransactionsController < ApplicationController
   end
 
   def create
-    # byebug
     @merchant = Merchant.find(params[:transaction][:merchant_id])
     @user = current_user
     @transaction = Transaction.new(transaction_params)
 
     respond_to do |format|
       if @transaction.save
+        @transaction.make_charge
         format.html { redirect_to @transaction, notice: 'Transaction was successfully created.' }
         format.json { render :show, status: :created, location: @transaction }
       else
@@ -53,6 +53,6 @@ class TransactionsController < ApplicationController
   end
 
   def transaction_params
-    params.require(:transaction).permit(:user_id, :merchant_id, :item_id, :total)
+    params.require(:transaction).permit(:user_id, :merchant_id, :item_id, :total, :paid, :stripe_charge)
   end
 end

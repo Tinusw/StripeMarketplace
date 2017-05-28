@@ -1,9 +1,12 @@
 !!!
 %html
   %head
+    = include_gon
+    = Gon::Base.render_data
     = csrf_meta_tags
     = stylesheet_link_tag 'application', media: 'all', data: { turbolinks_track: true }
     = javascript_include_tag 'application', data: {turbolinks_track: true}
+    %script{src: "https://js.stripe.com/v2/", type: "text/javascript"}
   %body
     = render 'shared/navbar'
     .container
