@@ -1,24 +1,26 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Stripe Connect & Rails Tutorial Application
 
-Things you may want to cover:
+This application is part of a three piece blog & tutorial I wrote on using the [Stripe Connect Platform](https://stripe.com/connect) with Rails 5.
 
-* Ruby version
+## Dependencies
+  * Rails 5.0
+  * Postgresql
 
-* System dependencies
+## Dev Setup
+  1. git clone git@github.com:Tinusw/StripeMarketplace.git
+  2. bundle install
+  3. rake db:create && rake db:migrate
+  4. `cp .env-sample .env`
+  5. set up your environment keys using details from you Connect Enabled Stripe Account
 
-* Configuration
+## A blog you say?
 
-* Database creation
+#You can read the three-part blog here:
+  - [Part 1]()
+  - [Part 2]()
+  - [Part 3]()
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+# Want to contribute to Application/Blog?
+[You can reach me here](https://twitter.com/ThatGuyTinus), or simply create a Pull Request!
