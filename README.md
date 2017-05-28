@@ -1,6 +1,4 @@
-# README
-
-Stripe Connect & Rails Tutorial Application
+# Stripe Connect & Rails Tutorial Application
 
 This application is part of a three piece blog & tutorial I'm writing on using the [Stripe Connect Platform](https://stripe.com/connect) with Rails 5.
 
