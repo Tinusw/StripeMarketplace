@@ -37,11 +37,9 @@
               - if current_user == @merchant.owner
                 .row
                   .col-lg-6.text-center
-                    .btn.btn-md.btn-warning.btn-options
-                      = link_to 'Edit', edit_merchant_item_path(@merchant, item)
+                    = link_to 'Edit', edit_merchant_item_path(@merchant, item), class: ' btn btn-md btn-warning btn-options'
                   .col-lg-6.text-center
-                    .btn.btn-md.btn-danger.btn-options
-                      = link_to 'Destroy', merchant_item_path(@merchant, item), method: :delete
+                    = link_to 'Destroy', merchant_item_path(@merchant, item), method: :delete, class: 'btn btn-md btn-danger btn-options'
   - else
     .col-lg-12.text-center
       %h4

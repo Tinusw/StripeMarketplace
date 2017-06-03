@@ -24,25 +24,20 @@
           - if current_user == merchant.owner
             .row
               .col-lg-4
-                .btn.btn-md.btn-info.btn-options
-                  = link_to 'Show', merchant
+                = link_to 'Show', merchant, class: 'btn btn-md btn-warning btn-options'
               .col-lg-4
-                .btn.btn-md.btn-warning.btn-options
-                  = link_to 'Edit', edit_merchant_path(merchant)
+                = link_to 'Edit', edit_merchant_path(merchant), class: 'btn btn-md btn-warning btn-options'
               .col-lg-4
-                .btn.btn-md.btn-danger.btn-options
-                  = link_to 'Destroy', merchant, method: :delete, data: { confirm: 'Are you sure?' }
+                = link_to 'Destroy', merchant, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-md btn-warning btn-options'
           - else
             .row
               .col-xs-12.col-sm-12.col-md-12.col-lg-12.text-center
-                .btn.btn-md.btn-primary.btn-options
-                  = link_to 'Show', merchant
+                = link_to 'Show', merchant, class: 'btn btn-md btn-success btn-options'
 
   %br
   .col-xs-12.col-sm-12.col-md-12.col-lg-12.text-center
     .panel.panel-default
       .panel-header
-        .btn.btn-md.btn-info
-          = link_to 'New Merchant', new_user_merchant_path(@user)
+        = link_to 'New Merchant', new_user_merchant_path(@user), class: 'btn btn-md btn-info'
 
   = render 'billing'
