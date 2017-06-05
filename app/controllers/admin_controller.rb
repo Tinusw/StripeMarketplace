@@ -27,6 +27,12 @@ class AdminController < ApplicationController
       @merchant.set_fee(params[:fee])
       @merchant.save
     end
+    if params[:amount]
+      @user.add_credit(params[:amount])
+      if @user.save
+        redirect_to admin_index_path
+      end
+    end
   end
 
   def find_user

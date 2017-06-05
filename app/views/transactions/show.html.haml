@@ -28,7 +28,7 @@
 
     %p
       %strong Fee Charged
-      = "$ #{@transaction.fee_charged}  (#{@transaction.fee_as_percentage}%)"
+      = "#{number_to_currency(@transaction.fee_charged)}  (#{@transaction.fee_as_percentage}%)"
 
     .row.text-center
       = link_to 'Back', merchants_path, class: 'btn btn-info'

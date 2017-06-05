@@ -16,7 +16,7 @@ class TransactionsController < ApplicationController
 
     respond_to do |format|
       if @transaction.save
-        @transaction.make_charge
+        @transaction.charge_with_credit_check
         format.html { redirect_to @transaction, notice: 'Transaction was successfully created.' }
         format.json { render :show, status: :created, location: @transaction }
       else

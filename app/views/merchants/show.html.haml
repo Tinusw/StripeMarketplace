@@ -25,7 +25,12 @@
                 %p
                   = item.description
                 %p
-                  = "$#{item.price}"
+                  - if current_user.credit?
+                    = number_to_currency(item.price - current_user.credit)
+                    %p
+                      You have credit!
+                  - else
+                    = number_to_currency(item.price)
               .row
                 .col-lg-12.text-center
                   = form_for @transaction do |f|
