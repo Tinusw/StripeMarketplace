@@ -17,7 +17,7 @@ class Transaction < ApplicationRecord
   end
 
   def description(charge)
-    "Transaction ID: #{id} -- #{user.email} just bought a #{item_bought.title} for $#{charge.to_s}, from #{merchant.title}"
+    "#{user.email} just bought a #{item_bought.title} for $#{charge.to_s}, from #{merchant.title}"
   end
 
   def credit_in_cents
@@ -27,7 +27,7 @@ class Transaction < ApplicationRecord
   # Description inserted on charge that is covered by colo platform.
   # takes one arg which should be the total amount so we can visualise what portion of charge is covered.
   def credit_description(amount)
-    "Credit Transaction where platform credit covers #{amount} of the original #{total_amount} for transaction ID: #{id} -- #{user.email} just bought a #{item_bought.title} for $#{total.to_s}, from #{merchant.title}"
+    "Credit Transaction where platform credit covers #{total} of the original #{total} for transaction ID: #{id} -- #{user.email} just bought a #{item_bought.title} for $#{total.to_s}, from #{merchant.title}"
   end
 
   def item_bought
@@ -49,7 +49,7 @@ class Transaction < ApplicationRecord
         make_charge(platform_charge, credit_description(platform_charge), ENV['MASTER_CREDIT_ACCOUNT'], 0, false)
 
         # The remainder that the customer must pay
-        make_charge(customer_charge_after_deduction, description(customer_charge_after_deduction), user.stripe_customer_id, charged_fee, true)
+        make_charge(customer_charge_after_deduction, user.stripe_customer_id, description(customer_charge_after_deduction), charged_fee, true)
 
         # Update user remaining credit to 0
         user.update_attribute(:credit, 0)
@@ -60,14 +60,14 @@ class Transaction < ApplicationRecord
         platform_charge = total_amount
         # Since the entire charge can be covered by credit
         # We only create one charge
-        make_charge(platform_charge, charge_description(platform_charge), ENV['MASTER_CREDIT_ACCOUNT'], 0, false)
+        make_charge(platform_charge, ENV['MASTER_CREDIT_ACCOUNT'], credit_description(platform_charge),0 , false)
 
         # Update users remaining credit
         user.update_attribute(:credit, credit_remaining_after_deduction)
       end
     else
       # User has no credit so should be charged the full amount
-      make_charge(total_amount, description(total_amount), user.stripe_customer_id, charged_fee, true)
+      make_charge(total_amount, user.stripe_customer_id, description(total_amount), charged_fee, true)
     end
   end
 
@@ -89,12 +89,10 @@ class Transaction < ApplicationRecord
       application_fee: fee.to_i
       }
     )
-
   # if the charge is successful, we'll receive a response in the charge object
   # We can then query that object via charge.paid
   # if true we can update our attribute
-  byebug
-  if charge.paid? && regular_charge?
+  if charge.paid? && !regular_charge.blank?
     after_charge_succeeded(charge)
   end
 
@@ -103,6 +101,6 @@ class Transaction < ApplicationRecord
   end
 
   def after_charge_succeeded(charge)
-    update_attributes(paid: true, stripe_charge: charge.id, fee_charged: charged_fee/100) if charge.paid?
+    update_attributes(paid: true, stripe_charge: charge.id, fee_charged: charged_fee/100, total: charge.amount/100) if charge.paid?
   end
 end
