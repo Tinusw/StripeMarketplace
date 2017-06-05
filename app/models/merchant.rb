@@ -6,4 +6,8 @@ class Merchant < ApplicationRecord
   def owner
     user
   end
+
+  def set_fee(amount)
+    update_attribute(:fee, amount)
+  end
 end

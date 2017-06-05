@@ -53,6 +53,6 @@ class TransactionsController < ApplicationController
   end
 
   def transaction_params
-    params.require(:transaction).permit(:user_id, :merchant_id, :item_id, :total, :paid, :stripe_charge)
+    params.require(:transaction).permit(:user_id, :merchant_id, :item_id, :total, :paid, :stripe_charge, :fee_charged)
   end
 end

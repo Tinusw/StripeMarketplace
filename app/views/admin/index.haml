@@ -1,19 +1,35 @@
 .container
+  %h2.text-center
+    Signed Up Customers
 - @users.each do |user|
   .container
-    %h3
-      Users
     .row
       .col-lg-3
         = user.email
       .col-lg-1
-        = user.created_at
+        = user.created_at.strftime('%x')
       .col-lg-3
         - if user.admin?
           Admin
         - else
-          = link_to 'Make Admin', admin_path(user, admin: 'true'), class:'btn btn-info', method: :put
+          = link_to 'Make Admin', admin_path(user, admin: 'true'), class:'btn-info', method: :put
       .col-lg-3
         = link_to 'Credit $10', admin_path(user, amount: 10.00), class:'btn btn-primary', method: :put
       .col-lg-2
         = "#{number_to_currency(user.credit)} credit remaining"
+.container
+  %h2.text-center
+    Stripe Connected Merchants
+- @merchants.each do |merchant|
+  .container
+    .row
+      .col-lg-3
+        = "#{merchant.title} - #{merchant.description}"
+      .col-lg-1
+        = merchant.created_at.strftime('%x')
+      .col-lg-2
+        = merchant.owner.email
+      .col-lg-4
+        = form_for merchant, method: "put" do |f|
+          = f.number_field :fee, placeholder: :fee, step: 0.05
+          = f.submit "Set Platform Fee", class: ' btn btn-info'

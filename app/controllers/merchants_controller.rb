@@ -29,8 +29,10 @@ class MerchantsController < ApplicationController
   end
 
   def update
+    @merchant.set_fee(params[:merchant][:fee]) if params[:merchant][:fee]
     if @merchant.save
-      redirect_to merchants_path
+      redirect_to admin_index_path, notice: 'added fee' if params[:merchant][:fee]
+      redirect_to merchants_path if params[:merchant][:title]
     else
       format.html { render :new }
     end
@@ -54,6 +56,6 @@ class MerchantsController < ApplicationController
   end
 
   def merchant_params
-    params.require(:merchant).permit(:title, :description, :user_id)
+    params.require(:merchant).permit(:title, :description, :user_id, :fee)
   end
 end

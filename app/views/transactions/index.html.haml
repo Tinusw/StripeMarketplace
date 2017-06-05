@@ -13,6 +13,8 @@
         Processed on Stripe?
       .col-lg-3
         Stripe Charge ID
+      .col-lg-1
+        Fee Charged
 
   - @transactions.each do |transaction|
     .row
@@ -29,3 +31,5 @@
         = transaction.paid
       .col-lg-3
         = transaction.stripe_charge
+      .col-lg-2
+        = number_to_currency(transaction.fee_charged)

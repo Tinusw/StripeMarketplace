@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170528000050) do
+ActiveRecord::Schema.define(version: 20170605011641) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,8 +29,9 @@ ActiveRecord::Schema.define(version: 20170528000050) do
     t.string   "title"
     t.string   "description"
     t.integer  "user_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
+    t.decimal  "fee",         precision: 5, scale: 4, default: "0.0"
     t.index ["user_id"], name: "index_merchants_on_user_id", using: :btree
   end
 
@@ -43,6 +44,7 @@ ActiveRecord::Schema.define(version: 20170528000050) do
     t.decimal  "total",         precision: 8, scale: 2, default: "0.0", null: false
     t.boolean  "paid",                                  default: false
     t.string   "stripe_charge"
+    t.decimal  "fee_charged",   precision: 5, scale: 4, default: "0.0"
     t.index ["merchant_id"], name: "index_transactions_on_merchant_id", using: :btree
     t.index ["user_id"], name: "index_transactions_on_user_id", using: :btree
   end

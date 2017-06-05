@@ -2,6 +2,8 @@ class AdminController < ApplicationController
 
   def index
     @users = User.all
+    @merchant_users = User.all.select{ |user| user.can_receive_payments?}
+    @merchants = Merchant.where(user: @merchant_users )
   end
 
   def show
@@ -21,10 +23,9 @@ class AdminController < ApplicationController
         redirect_to admin_index_path
       end
     end
-    if params[:amount]
-      @user.add_credit(params[:amount])
-      @user.save
-      redirect_to admin_index_path, notice: 'failed to credit'
+    if params[:fee]
+      @merchant.set_fee(params[:fee])
+      @merchant.save
     end
   end
 
