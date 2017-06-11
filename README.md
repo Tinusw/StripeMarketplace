@@ -15,8 +15,8 @@ This application is part of a three piece blog & tutorial I'm writing on using t
 
 ## You can read the three-part blog here:
   - [Part 1](https://medium.com/@ThatGuyTinus/stripe-connect-rails-part-1-22ba7204725b)
-  - [Part 2]()
-  - [Part 3]()
+  - [Part 2](https://medium.com/@ThatGuyTinus/stripe-connect-rails-part-2-9751c0e553f9)
+  - [Part 3](https://medium.com/@ThatGuyTinus/stripe-and-rails-part-3-63e22abde900)
 
 ## Want to contribute to the Application/Blog?
 [You can reach me here](https://twitter.com/ThatGuyTinus), or simply create a Pull Request!
